@@ -1,0 +1,25 @@
+Rhythm Tengoku SFX Index.
+
+Start Location: AA44FC
+
+General Structure:
+24 (0x18) bytes long.
+    LENGTH, SAMPLERATE, PITCH, LOOPPOINTS, LOOPPOINTL, START
+        LENGTH: A DWORD that describes how long the sample is in bytes.
+        SAMPLERATE: A DWORD that defines the samplerate of the sample. It is usually 13379 (0x3443).
+        PITCH: A DWORD that labels the pitch of the sample. The label of the sample must match the actual pitch of the sample.
+            (12*n) + 0 = C
+            (12*n) + 1 = C#
+            (12*n) + 2 = D
+            (12*n) + 3 = D#
+            (12*n) + 4 = E
+            (12*n) + 5 = F
+            (12*n) + 6 = F#
+            (12*n) + 7 = G
+            (12*n) + 8 = G#
+            (12*n) + 9 = A
+            (12*n) + 10 = A#
+            (12*n) + 11 = B
+        LOOPPOINTS/LOOPPOINTL: Two DWORDs that describe the start and end of a looppoint, in bytes, respectively. 
+            *Still researching
+        START: A pointer pointing to the start of the sample in GBA terms, a DWORD that tells the location of the SFX in bytes.
