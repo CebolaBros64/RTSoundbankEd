@@ -10,11 +10,10 @@ sfxIndexEnd = 0xAA9F2C
 progName = 'main.py'
 progDesc = 'Hey baby, howzit going? This. Is. A place. Holder.'
 
-parser = argparse.ArgumentParser(prog=progName, description=progDesc)            
-#parser.add_argument('ROM', 
-#                    help='Rhythm Tengoku (GBA) ROM with a CRC32 value of 349D7025.')
-parser.add_argument('-v', '--version', action='version', version='%(prog)s 0.0')
-parser.add_argument('-xs', '--export-samples', 
+parser = argparse.ArgumentParser(prog=progName, description=progDesc)
+parser.add_argument('-v', '--version', action='version',
+                    version='%(prog)s 0.0')
+parser.add_argument('-xs', '--export-samples',
                     metavar=('ROM', 'output'),
                     nargs=2,
                     help='Export all samples referenced in the SFX table.')
@@ -39,9 +38,10 @@ if args.decode_table:
 elif args.encode_table:
     binIndex = bytearray()
 
-    with open(args.encode_table[1], 'wb') as encodedOut, open(args.encode_table[0], 'r') as jsonIn:
+    with (open(args.encode_table[1], 'wb') as encodedOut,
+          open(args.encode_table[0], 'r') as jsonIn):
         encodedOut.write(rtsoundbank.encode_table(jsonIn))
-    
+
     print('File successfully exported to', args.encode_table[1] + ".")
 
 elif args.export_samples:
