@@ -1,4 +1,5 @@
 import struct, json
+from pathlib import Path
 from functools import partial
 
 struct_fmt = "<IIIIII" # little-endian, 6 integers
@@ -32,11 +33,10 @@ def decode_table(_bin):
     struct_unpack = struct.Struct(struct_fmt).unpack_from
 
     parsedIndex = []
-    with open(binIndex, 'rb') as f:
+    with open(_bin, 'rb') as f:
         parsedIndex = parse2list(f, struct_unpack, struct_len)
 
-    with open("index.json", 'w') as f:
-        f.write(json.dumps(list2dict(parsedIndex), indent=4))
+    return(banklist2dict(parsedIndex))
 
 def decode_table_json(_bin):
     return json.dumps(decode_table(_bin), indent=4)
@@ -51,16 +51,18 @@ def encode_table(f):
 
     return binIndex
 
-def export_samples(ROM, samples): # samples is a list containing the id for the samples that will be exported
+def export_samples(ROMIn, sampleTable, outputFolder): # samples is a list containing the id for the samples that will be exported
     sample_count = 000
 
-    with open(jsonIndex, 'r') as f, open(rtRomPath, 'rb') as romFile:
-        tengokuROM = romFile.read()
-        dictIndex = json.loads(f.read()) # json -> dict
+    tengokuROM = ROMIn.read()
+    dictIndex = sampleTable
 
-        for item in dictIndex:
-            startOffset = pointer_conv(item['start'])
-            lengthOffset = startOffset + pointer_conv(item['length'])
-            with open("samples/"+str(count)+".raw", "wb") as outFile:
-                outFile.write(tengokuROM[startOffset:lengthOffset])
-                sample_count += 1
+    Path(outputFolder).mkdir(parents=True, exist_ok=True) # https://stackoverflow.com/a/273227
+
+    for item in dictIndex:
+        startOffset = pointer_conv(item['start'])
+        lengthOffset = startOffset + pointer_conv(item['length'])
+
+        with open(outputFolder+"/"+str(sample_count)+".raw", "wb") as outFile:
+            outFile.write(tengokuROM[startOffset:lengthOffset])
+            sample_count += 1
