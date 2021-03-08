@@ -146,4 +146,4 @@ samples/
 *.bin
 *.wav
 *.gba
-index.json
+*.json
