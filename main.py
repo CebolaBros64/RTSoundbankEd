@@ -45,7 +45,11 @@ parser.add_argument('-et', '--encode-table',
 args = parser.parse_args()
 
 if args.decode_table:
-    pass
+    with (open(args.decode_table[1], 'w') as decodedOut,
+          open(args.decode_table[0], 'rb') as binTableIn):
+        decodedOut.write(rtsoundbank.decode_table_json(binTableIn))
+
+    print('File successfully exported to', args.decode_table[1] + ".")
 
 elif args.encode_table:
     binIndex = bytearray()

@@ -33,8 +33,8 @@ def decode_table(_bin):
     struct_unpack = struct.Struct(struct_fmt).unpack_from
 
     parsedIndex = []
-    with open(_bin, 'rb') as f:
-        parsedIndex = parse2list(f, struct_unpack, struct_len)
+    #with open(_bin, 'rb') as f:
+    parsedIndex = parse2list(_bin, struct_unpack, struct_len)
 
     return(banklist2dict(parsedIndex))
 
