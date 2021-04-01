@@ -1,4 +1,5 @@
-Rhythm Tengoku SFX Index.
+Rhythm Tengoku SFX Index. 
+by Malalaika
 
 Start Location: AA44FC
 
@@ -23,3 +24,27 @@ General Structure:
         LOOPPOINTS/LOOPPOINTL: Two DWORDs that describe the start and end of a looppoint, in bytes, respectively. 
             *Still researching
         START: A pointer pointing to the start of the sample in GBA terms, a DWORD that tells the location of the SFX in bytes.
+
+Rhythm Tengoku MIDI Sequence Index
+by CebolaBros64
+
+Start Location (Offset): 0xA9B078
+
+General Structure:
+24 (0x18) bytes long.
+    START, ...
+        START: A pointer to the start offset of the MIDI file. 
+               (Works the same way as the START attribute in the SFX index;
+               for more info on GBA pointers: https://www.pokecommunity.com/showthread.php?t=167212)
+
+
+$A9B4D8 - offset for space dance entry in MIDI index
+
+$AA44FC - offset for SFX index
+
+$AA9F2C - offset for jukebox Remix 1 midi file (first midi file in the ROM)
+ ^ 2C9FAA08 - converted to a GBA pointer
+$AE4CF4 - offset for Tap Trial 2 midi file
+ ^ F44CAE08 - converted to a GBA pointer
+$AEA3C0 - offset for Space Dance midi file
+ ^ C0A3AE08 - converted to a GBA pointer
