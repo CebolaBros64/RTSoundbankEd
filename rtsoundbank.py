@@ -48,7 +48,8 @@ def encode_table(f):
     dictIndex = json.loads(f.read()) # json -> dict
 
     for item in dictIndex:
-        binItem = struct.pack(struct_fmt, item["length"], item["samplerate"], item["pitch"], item["looppoints"], item["looppointl"], item["start"][0], item["start"][1], item["start"][2], item["start"][3])
+        binItem = struct.pack(struct_fmt, item["length"], item["samplerate"], item["pitch"], item["looppoints"], item["looppointl"],
+             bytes.fromhex(item["start"][0]), bytes.fromhex(item["start"][1]), bytes.fromhex(item["start"][2]), bytes.fromhex(item["start"][3]))
         binIndex += binItem
 
     return binIndex
