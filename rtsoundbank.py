@@ -21,8 +21,6 @@ def banklist2dict(_list):
         itemDict['looppointl'] = item[4]
         itemDict['start'] = [item[5].hex(), item[6].hex(), item[7].hex(), item[8].hex()]
 
-        print(itemDict)
-
         dictIndex.append(itemDict)
 
     return dictIndex
