@@ -2,7 +2,7 @@ import struct, json
 from pathlib import Path
 from functools import partial
 
-struct_fmt = "<IIIIII" # little-endian, 6 integers
+struct_fmt = "<IIIIIcccc" # little-endian, 5 integers, 4 bytes (a gba pointer)
                        # friendly reminder: "integer" tipically means a 16-bit integer
                        # and a 16-bit integer is the same as a DWORD
 
@@ -19,7 +19,7 @@ def banklist2dict(_list):
         itemDict['pitch'] = item[2]
         itemDict['looppoints'] = item[3]
         itemDict['looppointl'] = item[4]
-        itemDict['start'] = item[5]
+        itemDict['start'] = [item[5].hex(), item[6].hex(), item[7].hex(), item[8].hex()]
 
         dictIndex.append(itemDict)
 
@@ -46,7 +46,8 @@ def encode_table(f):
     dictIndex = json.loads(f.read()) # json -> dict
 
     for item in dictIndex:
-        binItem = struct.pack(struct_fmt, item["length"], item["samplerate"], item["pitch"], item["looppoints"], item["looppointl"], item["start"])
+        binItem = struct.pack(struct_fmt, item["length"], item["samplerate"], item["pitch"], item["looppoints"], item["looppointl"],
+             bytes.fromhex(item["start"][0]), bytes.fromhex(item["start"][1]), bytes.fromhex(item["start"][2]), bytes.fromhex(item["start"][3]))
         binIndex += binItem
 
     return binIndex
