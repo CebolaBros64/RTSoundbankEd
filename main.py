@@ -66,10 +66,11 @@ elif args.export_samples:
         tengokuROM = ROMIn.read()
         binTableOut.write(tengokuROM[sfxIndexOffset:sfxIndexOffset+sfxIndexLength])
 
-    with open(args.export_samples[0], 'rb') as ROMIn:
+    with (open(args.export_samples[0], 'rb') as ROMIn,
+          open("tempTable.bin", 'rb') as binTable):
         outputFolder = args.export_samples[1]
         rtsoundbank.export_samples(ROMIn, 
-                                   rtsoundbank.decode_table("tempTable.bin"), 
+                                   rtsoundbank.decode_table(binTable), 
                                    outputFolder)
 
 elif args.export_table:

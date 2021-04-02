@@ -26,7 +26,12 @@ def banklist2dict(_list):
     return dictIndex
 
 def pointer_conv(p):
-    return int.from_bytes(b''.join(struct.unpack(">ccc", (struct.pack('>i', p)[1:]))), byteorder="big")
+    ptrBytes = bytearray()
+    for i in range(3):
+        ptrBytes += bytes.fromhex(p[i])
+
+    return int.from_bytes(bytes(ptrBytes), byteorder="little")
+    #return int.from_bytes(b''.join(struct.unpack(">ccc", (struct.pack('>i', p)[1:]))), byteorder="big")
 
 def decode_table(_bin): 
     struct_len = struct.calcsize(struct_fmt)
@@ -62,7 +67,7 @@ def export_samples(ROMIn, sampleTable, outputFolder): # samples is a list contai
 
     for item in dictIndex:
         startOffset = pointer_conv(item['start'])
-        lengthOffset = startOffset + pointer_conv(item['length'])
+        lengthOffset = startOffset + item['length']
 
         with open(outputFolder+"/"+str(sample_count)+".raw", "wb") as outFile:
             outFile.write(tengokuROM[startOffset:lengthOffset])
