@@ -45,8 +45,7 @@ parser.add_argument('-et', '--encode-table',
 args = parser.parse_args()
 
 if args.decode_table:
-    with (open(args.decode_table[1], 'w') as decodedOut,
-          open(args.decode_table[0], 'rb') as binTableIn):
+    with open(args.decode_table[1], 'w') as decodedOut, open(args.decode_table[0], 'rb') as binTableIn:
         decodedOut.write(rtsoundbank.decode_table_json(binTableIn))
 
     print('File successfully exported to', args.decode_table[1] + ".")
@@ -54,20 +53,17 @@ if args.decode_table:
 elif args.encode_table:
     binIndex = bytearray()
 
-    with (open(args.encode_table[1], 'wb') as encodedOut,
-          open(args.encode_table[0], 'r') as jsonIn):
+    with open(args.encode_table[1], 'wb') as encodedOut, open(args.encode_table[0], 'r') as jsonIn:
         encodedOut.write(rtsoundbank.encode_table(jsonIn))
 
     print('File successfully exported to', args.encode_table[1] + ".")
 
 elif args.export_samples:
-    with (open(args.export_samples[0], 'rb') as ROMIn,
-          open("tempTable.bin", 'wb') as binTableOut):
+    with open(args.export_samples[0], 'rb') as ROMIn, open("tempTable.bin", 'wb') as binTableOut:
         tengokuROM = ROMIn.read()
         binTableOut.write(tengokuROM[sfxIndexOffset:sfxIndexOffset+sfxIndexLength])
 
-    with (open(args.export_samples[0], 'rb') as ROMIn,
-          open("tempTable.bin", 'rb') as binTable):
+    with open(args.export_samples[0], 'rb') as ROMIn, open("tempTable.bin", 'rb') as binTable:
         outputFolder = args.export_samples[1]
         rtsoundbank.export_samples(ROMIn, 
                                    rtsoundbank.decode_table(binTable), 
@@ -76,8 +72,7 @@ elif args.export_samples:
 elif args.export_table:
     args.export_table[1] = validate_extension(args.export_table[1], ".bin", forceExt=False)
 
-    with (open(args.export_table[0], 'rb') as ROMIn,
-          open(args.export_table[1], 'wb') as binTableOut):
+    with open(args.export_table[0], 'rb') as ROMIn, open(args.export_table[1], 'wb') as binTableOut:
         tengokuROM = ROMIn.read()
         binTableOut.write(tengokuROM[sfxIndexOffset:sfxIndexOffset+sfxIndexLength])
 
