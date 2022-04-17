@@ -69,6 +69,6 @@ def export_samples(ROMIn, sampleTable, outputFolder): # samples is a list contai
         startOffset = pointer_conv(item['start'])
         lengthOffset = startOffset + item['length']
 
-        with open(outputFolder+"/"+str(sample_count)+".raw", "wb") as outFile:
+        with open(Path(outputFolder, str(sample_count)+".raw"), "wb") as outFile:
             outFile.write(tengokuROM[startOffset:lengthOffset])
             sample_count += 1
